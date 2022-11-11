@@ -48,7 +48,5 @@ namespace Spg.PluePos._01.Model
             foreach(var post in Posts) { temp += post.Rating; }
             return temp;
         }
-
-        
     }
 }
