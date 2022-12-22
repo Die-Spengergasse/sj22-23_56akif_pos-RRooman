@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Metis.Model
+namespace Metis.Domain.Test
 {
-    internal class Fragen
+    public class LinqDemo
     {
     }
 }

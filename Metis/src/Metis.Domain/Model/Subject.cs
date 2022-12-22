@@ -8,10 +8,24 @@ namespace Metis.Domain.Model
 {
     public class Subject
     {
-        public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public List<Question> Questions { get; set; } = new();
-        public List<Topic> Topic { get; set; } = new();
+        public string Name { get; private set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public Knowledge SubjectKnowledge { get; } = Knowledge.Unknown;
+
+        private List<Question> _questions { get; set; } = new();
+        public virtual IReadOnlyList<Question> Questions => _questions;
+
+        private List<Topic> _topics { get; set; } = new();
+        public virtual IReadOnlyList<Topic> Topics => _topics;
+
+
+        protected Subject()
+        { }
+
+        public Subject(string name, string description)
+        {
+            Name = name;
+            Description = description;
+        }
     }
 }

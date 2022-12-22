@@ -8,9 +8,18 @@ namespace Metis.Domain.Model
 {
     public class Flaged
     {
-        public int FlagId { get; set; }
+        public int Id { get; set; }
         public string FlaggingReason { get; set; } = String.Empty;
         public Question Question { get; set; } = default!;
         public Topic Topic { get; set; } = default!;
+        public Subject Subject { get; set; } = default!;
+
+        protected Flaged()
+        { }
+
+        public Flaged(string flaggingReason)
+        {
+            FlaggingReason = flaggingReason;
+        }
     }
 }

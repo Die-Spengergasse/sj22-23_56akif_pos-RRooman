@@ -9,10 +9,46 @@ namespace Metis.Domain.Model
     public class ToDo
     {
         public int Id { get; set; }
-        public List<Question>? MarkedQuestions { get; }
-        public List<Topic>? MarkedTopics { get; }
-        public List<Subject>? MarkedSubjects { get; }
-        public DateTime Until { get; set; } = DateTime.MaxValue;
+
+        public DateTime Until { get; set; }
         public bool Done { get; set; } = false;
+
+        public Question? Question { get; } = default!;
+        public Topic? Topic { get; } = default!;
+        public Subject? Subject { get; } = default!;
+
+
+        protected ToDo()
+        { }
+
+        public ToDo(DateTime until, Question question)
+        {
+            Until = until;
+            Question = question;
+        }
+
+        public ToDo(DateTime until, Subject subject)
+        {
+            Until = until;
+            Subject = subject;
+        }
+
+        public ToDo(DateTime until, Topic topic)
+        {
+            Until = until;
+            Topic = topic;
+        }
+
+
+        public void SetDone()
+        {
+            Done = true;
+        }
+
+        public void ChangeUntil(DateTime date)
+        {
+            if (date > DateTime.Now) Until = date;
+            else Console.WriteLine("Ungültiges Datum. Datum muss in der Vergangenheit liegen.");
+        }
     }
 }
