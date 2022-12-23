@@ -11,7 +11,7 @@ namespace Metis.Domain.Model
 
     public class Question
     {
-        public int Id { get; set; }
+        public int Id { get; private set; }
         public string QuestionText { get; set; } = string.Empty;
         public Answer? Answer { get; set; } = default!;
         
@@ -20,23 +20,22 @@ namespace Metis.Domain.Model
         
         public Statistic QStat { get; }
 
-        //public Knowledge Knowledge { get; set; } = Knowledge.Unknown;
-        
-        //public int TimesAsked { get; private set; }
-        //public bool Flaged { get; set; } = false;
+        public IReadOnlyList<QuestionTopic>? QuestionTopics { get; set; }
 
-        private List<Topic> _topics { get; set; } = new();
-        public virtual IReadOnlyList<Topic> Topics => _topics;
+        //private List<Topic> _topics { get; set; } = new();
+        //public virtual IReadOnlyList<Topic> Topics => _topics;
 
-        private List<Result>? _answereds { get; set; } = new();
+        private List<Result> _answereds { get; set; } = new();
         public virtual IReadOnlyList<Result>? Answereds => _answereds;
 
-        private List<ToDo>? _toDo { get; set; } = new();
+        private List<ToDo> _toDo { get; set; } = new();
         public virtual IReadOnlyList<ToDo>? ToDo => _toDo;
 
 
         protected Question()
-        { }
+        {
+            QStat = new Statistic(this);
+        }
 
         public Question(
             string questionText,
@@ -49,17 +48,17 @@ namespace Metis.Domain.Model
             QStat = new Statistic(this);
         }
 
-        public Question(
-            string questionText,
-            QuestionType questionType, 
-            AnswerType answerType, 
-            List<Topic> topics)
-        {
-            QuestionText = questionText;
-            QuestionType = questionType;
-            AnswerType = answerType;
-            _topics = topics;
-            QStat = new Statistic(this);
-        }
+        //public Question(
+        //    string questionText,
+        //    QuestionType questionType, 
+        //    AnswerType answerType, 
+        //    List<Topic> topics)
+        //{
+        //    QuestionText = questionText;
+        //    QuestionType = questionType;
+        //    AnswerType = answerType;
+        //    _topics = topics;
+        //    QStat = new Statistic(this);
+        //}
     }
 }

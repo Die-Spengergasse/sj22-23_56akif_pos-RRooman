@@ -39,5 +39,61 @@ namespace Metis.Domain.Test
 
             Assert.Equal(1, db.Questions.First().QStat.AskedCount);
         }
+
+        [Fact]
+        public void Statistic_IncrementAsked_Add_ResultsList_Test()
+        {
+            MetisContext db = GenerateDb();
+            db.Seed();
+
+            var testStat = db.Questions.First().QStat;
+
+            testStat.IncrementAsked(Model.Result.Incorrect);
+
+            db.Update(testStat);
+            db.SaveChanges();
+
+            Assert.Equal(Model.Result.Incorrect, db.Questions.First().QStat.Results.First());
+        }
+
+        [Fact]
+        public void Statistic_IncrementAsked_CalculatePercentCorrect()
+        {
+            MetisContext db = GenerateDb();
+            db.Seed();
+
+            var testStat = db.Questions.First().QStat;
+
+            for (int i=0; i < 15; i++)
+            {
+                testStat.IncrementAsked(Model.Result.Correct);
+                if (i < 5) testStat.IncrementAsked(Model.Result.Incorrect);
+            }
+
+            db.Update(testStat);
+            db.SaveChanges();
+
+            Assert.Equal(75, db.Questions.First().QStat.PercentCorrect);
+        }
+
+        [Fact]
+        public void Statistic_IncrementAsked_CalculateKnowledge()
+        {
+            MetisContext db = GenerateDb();
+            db.Seed();
+
+            var testStat = db.Questions.First().QStat;
+
+            for (int i = 0; i < 15; i++)
+            {
+                testStat.IncrementAsked(Model.Result.Correct);
+                if (i < 5) testStat.IncrementAsked(Model.Result.Incorrect);
+            }
+
+            db.Update(testStat);
+            db.SaveChanges();
+
+            Assert.Equal(Model.Knowledge.Average, db.Questions.First().QStat.Knowledge);
+        }
     }
 }

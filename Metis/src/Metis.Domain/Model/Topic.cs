@@ -11,20 +11,13 @@ namespace Metis.Domain.Model
         public string Name { get; set; } = string.Empty;
         public string TopicInfo { get; set; } = string.Empty;
         
-        public Knowledge TopicKnowledge { get; } = Knowledge.Unknown;
+        //public Knowledge TopicKnowledge { get; } = Knowledge.Unknown;
         public Subject Subject { get; set; } = default!;
 
-        private List<Question> _questions { get; set; } = new();
-        public virtual IReadOnlyList<Question> Questions => _questions;
-        
+        public IList<QuestionTopic>? QuestionTopics { get; set; }
 
-        //public List<Subject> _subjects { get; set; } = new();
-        //public virtual IReadOnlyList<Subject> Subjects => _subjects;
-        
-        
-        //private List <ToDo>? _toDo { get; set; }
-        //public IReadOnlyList<ToDo>? ToDo => _toDo;
-        //public Flaged Flaged { get; set; } = default!;
+        //private List<Question> _questions { get; set; } = new();
+        //public virtual IReadOnlyList<Question> Questions => _questions;
 
 
         protected Topic()

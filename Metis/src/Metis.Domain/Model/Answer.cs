@@ -11,7 +11,7 @@ namespace Metis.Domain.Model
         public int AnswerId { get; set; }
         public string AnswerText { get; } = string.Empty;
         public string? Explanation { get; set; }
-        //public Question Question { get; } = default!;
+        public string? AdditionalInfo { get; set; }
 
 
         protected Answer()
@@ -26,6 +26,13 @@ namespace Metis.Domain.Model
         {
             AnswerText = answerText;
             Explanation = explanation;
+        }
+
+        public Answer(string answerText, string? explanation, string? additionalInfo)
+        {
+            AnswerText = answerText;
+            Explanation = explanation;
+            AdditionalInfo = additionalInfo;
         }
     }
 }

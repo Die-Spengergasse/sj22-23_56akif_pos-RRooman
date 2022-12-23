@@ -16,12 +16,13 @@ namespace Metis.Infrastructure
     {
         // 2. Tabellen als Properties auflisten
         public DbSet<Answer> Answers => Set<Answer>();
-        public DbSet<Flaged> Flagged => Set<Flaged>();
+        public DbSet<Flagged> Flagged => Set<Flagged>();
         public DbSet<Question> Questions => Set<Question>();
         public DbSet<Statistic> Statistics => Set<Statistic>();
         public DbSet<Subject> Subjects => Set<Subject>();
         public DbSet<ToDo> ToDos => Set<ToDo>();
         public DbSet<Topic> Topics => Set<Topic>();
+        public DbSet<QuestionTopic> QuestionTopics => Set<QuestionTopic>();
 
         // 3. Constructor
         public MetisContext()
@@ -40,6 +41,8 @@ namespace Metis.Infrastructure
         {
             modelBuilder.Entity<Subject>().HasKey(s => s.Name);
             //modelBuilder.Entity<Subject>().Property(s => s.Name).IsRequired();    // nicht notwendig da Primary Key
+            //modelBuilder.Entity<Subject>().Property(s => s.Name).IsUnicode(true); // nicht notwendig da Primary Key
+            modelBuilder.Entity<Subject>().HasMany(s => s.Topics);
 
             modelBuilder.Entity<Topic>().HasKey(s => s.Name);
 
@@ -48,6 +51,19 @@ namespace Metis.Infrastructure
             //modelBuilder.Entity<Question>().OwnsOne(q => q.Answer);               // OwnsOne -> Access von Answer nur durch Owner möglich -> in dem Fall nicht gewünscht
 
             modelBuilder.Entity<Question>().OwnsOne(q => q.QStat);
+
+            modelBuilder.Entity<QuestionTopic>().HasKey(qt => new{ qt.QuestionId, qt.TopicName });
+            
+            //modelBuilder.Entity<QuestionTopic>()
+            //    .HasOne<Question>(qt => qt.Question)
+            //    .WithMany(q => q.QuestionTopics)
+            //    .HasForeignKey(qt => qt.QuestionId);
+
+            //modelBuilder.Entity<QuestionTopic>()
+            //    .HasOne<Topic>(qt => qt.Topic)
+            //    .WithMany(t => t.QuestionTopics)
+            //    .HasForeignKey(qt => qt.TopicName);
+
         }
 
         public void Seed()
@@ -93,8 +109,8 @@ namespace Metis.Infrastructure
                 .CustomInstantiator(f => new Question(
                     f.Lorem.Sentence(),
                     f.Random.Enum<QuestionType>(),
-                    f.Random.Enum<AnswerType>(),
-                    f.Random.ListItems(topics).ToList()))
+                    f.Random.Enum<AnswerType>()))
+                    //f.Random.ListItems(topics).ToList()))
                 .Rules((f, q) =>
                 {
                     q.Answer = answers[f.Random.Int(0, answers.Count() - 1)];   // nur möglich wenn Answer nicht von Question geownt wird, da Answer sonst nicht vorher instanzierbar ist

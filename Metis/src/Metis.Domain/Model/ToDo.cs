@@ -40,10 +40,7 @@ namespace Metis.Domain.Model
         }
 
 
-        public void SetDone()
-        {
-            Done = true;
-        }
+        public void SetDone() => Done = true;
 
         public void ChangeUntil(DateTime date)
         {

@@ -6,20 +6,22 @@ using System.Threading.Tasks;
 
 namespace Metis.Domain.Model
 {
-    public class Flaged
+    public class QuestionTopic
     {
-        public int Id { get; set; }
-        public string FlaggingReason { get; set; } = String.Empty;
+        public int? QuestionId { get; set; }
         public Question Question { get; set; } = default!;
-        public Topic Topic { get; set; } = default!;
-        public Subject Subject { get; set; } = default!;
 
-        protected Flaged()
+        public string? TopicName { get; set; }
+        public Topic Topic { get; set; } = default!;
+
+
+        public QuestionTopic()
         { }
 
-        public Flaged(string flaggingReason)
+        public QuestionTopic(Question question, Topic topic)
         {
-            FlaggingReason = flaggingReason;
+            Question = question;
+            Topic= topic;
         }
     }
 }

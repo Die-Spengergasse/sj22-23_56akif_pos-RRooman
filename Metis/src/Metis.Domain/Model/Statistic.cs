@@ -11,18 +11,13 @@ namespace Metis.Domain.Model
 
     public class Statistic
     {
-        public int AskedCount { get; set; }
-        //public double AverageKnowledge { get; }
-        //public int TotalQuestionsAsked { get; }
-        public int PercentCorrect { get; set; }
-        public Knowledge Knowledge { get; set; } = Knowledge.Unknown;
+        public int AskedCount { get; private set; }
+        public int PercentCorrect { get; private set; }
+        public Knowledge Knowledge { get; private set; } = Knowledge.Unknown;
         public Question Question { get; } = default!;
 
         private List<Result> _results = new List<Result>();
         public IReadOnlyList<Result> Results => _results;
-
-        //private List<Question> _questions = new();
-        //public IReadOnlyList<Question> Questions => _questions;
 
         protected Statistic()
         { }
@@ -38,16 +33,16 @@ namespace Metis.Domain.Model
             _results.Add(result);
 
             CalculatePercentCorrect();
-            Calculate_Knowledge();
+            CalculateKnowledge();
         }
 
         private void CalculatePercentCorrect()
         {
-            int correct = _results.Where(item => item == Result.Correct).Count();
-            PercentCorrect = correct / AskedCount * 100;
+            double correct = _results.Where(item => item == Result.Correct).Count();
+            PercentCorrect = (int)(correct / AskedCount * 100);
         }
 
-        private void Calculate_Knowledge()
+        private void CalculateKnowledge()
         {
             switch (PercentCorrect)
             {
