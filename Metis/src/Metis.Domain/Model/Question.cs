@@ -32,7 +32,7 @@ namespace Metis.Domain.Model
         public virtual IReadOnlyList<ToDo>? ToDo => _toDo;
 
 
-        protected Question()
+        public Question()
         {
             QStat = new Statistic(this);
         }

@@ -10,9 +10,9 @@ namespace Spg.PluePos._01.Model
     {
 
         public string Title { get; }
+
         public DateTime Created { get; }
 
-        public SmartPhoneApp SmartPhone => smartPhone;
         public int Rating
         {
             get { return _rating; }
@@ -23,9 +23,10 @@ namespace Spg.PluePos._01.Model
             }
         }
         private int _rating;
-        private readonly SmartPhoneApp smartPhone;
 
-        public abstract string Html { get; }
+        public SmartPhoneApp? SmartPhone { get; set; }
+
+        public abstract string? Html { get; }
 
 
         public Post(string title, DateTime created)
@@ -37,9 +38,7 @@ namespace Spg.PluePos._01.Model
 
         public Post(string title) : this(title, DateTime.Now) { }
 
-        public override string ToString()
-        {
-            return Html;
-        }
+        public override string ToString() => $"{Html}";
+
     }
 }

@@ -20,11 +20,13 @@ namespace Properties
             set { _bruttoGehalt ??= value; }
         }
         public string? Kuerzel { 
-            get { return Zuname?[..3]?.ToUpper() ?? ""; }
+            get { return Zuname?[..3]?.ToUpper() ?? string.Empty; }             //[2..3]->von Stelle 2 bis 3; [..^3]->bis 3 Stellen vor Ende 
         }
 
         public decimal? Nettogehalt { get 
             { return (_bruttoGehalt ?? 0) *0.8M; }
         }
+
+        //public decimal? Nettogehalt => (_bruttoGehalt ?? 0) * 0.8M;           //alternativer Lambdaausdruck
     }
 }

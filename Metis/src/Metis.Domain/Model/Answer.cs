@@ -13,6 +13,9 @@ namespace Metis.Domain.Model
         public string? Explanation { get; set; }
         public string? AdditionalInfo { get; set; }
 
+        public int QuestionNavigationId { get; set; }
+        public virtual Question QuestionNavigation { get; set; } = new();
+
 
         protected Answer()
         { }
